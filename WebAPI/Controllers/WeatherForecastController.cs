@@ -1,9 +1,12 @@
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
+//[Route("[controller]")]  -> Token que será substituído pelo nome do controlador ao qual o atributo está associado. Isso permite que o roteador gere automaticamente URLs com base no nome do controlador.
+
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]")] 
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -13,11 +16,13 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
 
+    //método construtor
     public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
     }
 
+    //quem chama o método Get() é o próprio usuario
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
