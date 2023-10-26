@@ -1,6 +1,8 @@
 //Controladores servem para lidar com as requisições recebidas e devolver uma resposta.
+//Filmes é a propriedade do FilmeContext: public DbSet<Filme> Filmes { get; set; }
 
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Data;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers;
@@ -11,9 +13,14 @@ namespace WebAPI.Controllers;
 [Route("[controller]")] 
 public class FilmeController : ControllerBase 
 {
-  private static List<Filme> listaDeFilmes = new List<Filme>();
-  private static int id=0; 
+  //injeção de dependência
+  private FilmeContext _context;
 
+  public FilmeController(FilmeContext context)
+  {
+    this._context = context;
+  }
+  
   /*
     Para inserir uma nova informação no banco de dados usamos o post(HttpPost).
     O método GET é usado para recuperar informações do servidor,
@@ -25,8 +32,8 @@ public class FilmeController : ControllerBase
   public IActionResult AdicionaFilme([FromBody] Filme filme) 
   {
     //o parâmetro filme vem através do corpo da requisição
-    filme.Id= id++;  //não achei uma boa prática atribuir id manualmente
-    listaDeFilmes.Add(filme);
+    _context.Filmes.Add(filme);
+    _context.SaveChanges();
     return CreatedAtAction(nameof(RecuperaFilmesPorId), new {id = filme.Id}, filme);
   }
 
@@ -42,7 +49,7 @@ public class FilmeController : ControllerBase
   [HttpGet]
   public IEnumerable<Filme> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery]int take = 50) 
   {
-    return listaDeFilmes.Skip(skip).Take(take);
+    return _context.Filmes.Skip(skip).Take(take);
   }
   
   // IActionResult siginifica resultado de uma ação que foi executada
@@ -51,7 +58,7 @@ public class FilmeController : ControllerBase
   [HttpGet("{id}")]
   public IActionResult RecuperaFilmesPorId(int id)
   {
-    var filme = listaDeFilmes.FirstOrDefault(filme => filme.Id == id);
+    var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
     if(filme == null) return NotFound(); //status code 404
     return Ok(filme);  //status code Ok e retorna o filme
   }
