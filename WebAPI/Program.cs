@@ -1,5 +1,9 @@
 //Arquivo que iremos definir qual serviço iremos utilizar em nossa aplicação
 
+/* 
+    AutoMapper:  biblioteca open-source que permite mapear objetos de um tipo para outro. 
+*/
+
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 
@@ -7,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("FilmeConnection");
 builder.Services.AddDbContext<FilmeContext>(option => option.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 // Add services to the container.

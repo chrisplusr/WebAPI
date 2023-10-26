@@ -8,9 +8,11 @@ namespace WebAPI.Data;
      Isso significa que você pode trabalhar com objetos e classes em vez de escrever SQL puro. 
      Isso torna o código mais orientado a objetos :)
      DbContext permite mapear objetos de classe em entidades de banco de dados.
+     DbContext pode realizar diversas operações no banco e uma delas é a de escrita.
 */
 
-class FilmeContext : DbContext 
+//se não declarar a classe como pública, ela fica com o acesso internal
+public class FilmeContext : DbContext 
 {
     public FilmeContext(DbContextOptions<FilmeContext> options) : base(options) {}
 

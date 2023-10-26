@@ -1,9 +1,11 @@
 //Controladores servem para lidar com as requisições recebidas e devolver uma resposta.
 //Filmes é a propriedade do FilmeContext: public DbSet<Filme> Filmes { get; set; }
+// AutoMapper foi incluida para converter FilmeDto em Filme
 
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Data;
 using WebAPI.Models;
+using WebAPI.Data.Dtos;
 
 namespace WebAPI.Controllers;
 
@@ -15,10 +17,12 @@ public class FilmeController : ControllerBase
 {
   //injeção de dependência
   private FilmeContext _context;
+  priavate IMapper _mapper;
 
-  public FilmeController(FilmeContext context)
+  public FilmeController(FilmeContext context, IMapper mapper)
   {
     this._context = context;
+    this._mapper = mapper;
   }
   
   /*
@@ -29,9 +33,9 @@ public class FilmeController : ControllerBase
     e qual caminho que ele pode entrar este objeto
   */
   [HttpPost]
-  public IActionResult AdicionaFilme([FromBody] Filme filme) 
+  public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto) 
   {
-    //o parâmetro filme vem através do corpo da requisição
+    Filme filme = _mapper.Map<Filme>(filmeDto); //conversão
     _context.Filmes.Add(filme);
     _context.SaveChanges();
     return CreatedAtAction(nameof(RecuperaFilmesPorId), new {id = filme.Id}, filme);
@@ -45,7 +49,7 @@ public class FilmeController : ControllerBase
     [FromQuery] int skip = 0 -> valor padrão caso o usuario não entre com o valor
   */
 
-  //A aplicação vai saber qual a função Get chamar pelo parâmetro da função
+ 
   [HttpGet]
   public IEnumerable<Filme> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery]int take = 50) 
   {
@@ -55,11 +59,23 @@ public class FilmeController : ControllerBase
   // IActionResult siginifica resultado de uma ação que foi executada
   //FirstOrDefault -> busca um elemento da coleção
   // https://localhost:7106/filme/1 -> busca pelo filme de id == 1;
+   //A aplicação vai saber qual a função Get chamar pelo parâmetro da função
   [HttpGet("{id}")]
   public IActionResult RecuperaFilmesPorId(int id)
   {
     var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
     if(filme == null) return NotFound(); //status code 404
     return Ok(filme);  //status code Ok e retorna o filme
+  }
+
+  //Pode ser usado o PUT e o PASH
+  [HttpPut("{id}")]
+  public IActionResult AtualizaFilme(int id, [FromBody], UpdateFilmeDto  filmeDto) {
+    var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+    
+    if(filme == null) return NotFound;
+    _mapper.Map(filmeDto, filme);  //os campos de filmeDto serão mapeados para meu filme
+    _context.SaveChanges();
+    return NoContentent(); //status code utilizado para atualização
   }
 }
