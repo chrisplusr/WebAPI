@@ -2,10 +2,13 @@
 //Filmes é a propriedade do FilmeContext: public DbSet<Filme> Filmes { get; set; }
 // AutoMapper foi incluida para converter FilmeDto em Filme
 
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Data;
 using WebAPI.Models;
 using WebAPI.Data.Dtos;
+using Azure;
+
 
 namespace WebAPI.Controllers;
 
@@ -17,7 +20,7 @@ public class FilmeController : ControllerBase
 {
   //injeção de dependência
   private FilmeContext _context;
-  priavate IMapper _mapper;
+  private IMapper _mapper; 
 
   public FilmeController(FilmeContext context, IMapper mapper)
   {
@@ -70,12 +73,36 @@ public class FilmeController : ControllerBase
 
   //Pode ser usado o PUT e o PASH
   [HttpPut("{id}")]
-  public IActionResult AtualizaFilme(int id, [FromBody], UpdateFilmeDto  filmeDto) {
+  public IActionResult AtualizaFilme(int id, JsonPatchDocument<UpdateFilmeDto> patch) {
     var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
     
-    if(filme == null) return NotFound;
+    if(filme == null) return NotFound();
+
+   //converter
+    var filmeParaAtualizar = _mapper.Map<UpdateFilmeDto>(filme);
+    patch.ApplyTo(filmeParaAtualizar, ModelState);
+
+    if(!TryValidateModel(filmeParaAtualizar)) {
+      return ValidationProblem();
+    }
+
     _mapper.Map(filmeDto, filme);  //os campos de filmeDto serão mapeados para meu filme
     _context.SaveChanges();
-    return NoContentent(); //status code utilizado para atualização
+    return NoContent(); //status code utilizado para atualização
   }
+
+  //mudanças parciais
+  [HttpPatch("{id}")]
+  public IActionResult AtualizaFilmeParcial(int id, [FromBody] UpdateFilmeDto  filmeDto) {
+    var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+    
+    if(filme == null) return NotFound();
+    _mapper.Map(filmeDto, filme);  //os campos de filmeDto serão mapeados para meu filme
+    _context.SaveChanges();
+    return NoContent(); //status code utilizado para atualização
+  }
+
+    public class JsonPatchDocument<T>
+    {
+    }
 }

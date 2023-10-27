@@ -26,3 +26,10 @@ Ao gerar a migration, um código C# é criado, representando as operações que 
 Add-Migration: dotnet ef migrations add CriandoTabelaDeFilme
 Update-Database: dotnet ef database update
 
+Instação do AutoMapper: 
+
+dotnet add package AutoMapper
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+
+instalação do Microsoft.AspNetCore.Mvc.NewtonsoftJson 
+dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson

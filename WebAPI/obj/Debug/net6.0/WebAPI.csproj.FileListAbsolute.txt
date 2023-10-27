@@ -1,0 +1,7 @@
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.csproj.AssemblyReference.cache
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.GeneratedMSBuildEditorConfig.editorconfig
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.AssemblyInfoInputs.cache
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.AssemblyInfo.cs
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.csproj.CoreCompileInputs.cache
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.MvcApplicationPartsAssemblyInfo.cs
+/home/chrisplusr/a/WebAPI/WebAPI/obj/Debug/net6.0/WebAPI.MvcApplicationPartsAssemblyInfo.cache

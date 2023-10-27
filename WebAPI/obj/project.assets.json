@@ -3203,19 +3203,19 @@
     ]
   },
   "packageFolders": {
-    "/home/runner/.nuget/packages/": {}
+    "/home/chrisplusr/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/runner/WebAPI/WebAPI/WebAPI.csproj",
+      "projectUniqueName": "/home/chrisplusr/a/WebAPI/WebAPI/WebAPI.csproj",
       "projectName": "WebAPI",
-      "projectPath": "/home/runner/WebAPI/WebAPI/WebAPI.csproj",
-      "packagesPath": "/home/runner/.nuget/packages/",
-      "outputPath": "/home/runner/WebAPI/WebAPI/obj/",
+      "projectPath": "/home/chrisplusr/a/WebAPI/WebAPI/WebAPI.csproj",
+      "packagesPath": "/home/chrisplusr/.nuget/packages/",
+      "outputPath": "/home/chrisplusr/a/WebAPI/WebAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/runner/.nuget/NuGet/NuGet.Config"
+        "/home/chrisplusr/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -3277,6 +3277,20 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.23, 6.0.23]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[6.0.23, 6.0.23]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.23, 6.0.23]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -3285,7 +3299,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/nix/store/4axlc21msjr9g181l2y6hxsmm4jar8i7-dotnet-sdk-6.0.403/sdk/6.0.403/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.402/RuntimeIdentifierGraph.json"
       }
     }
   }
